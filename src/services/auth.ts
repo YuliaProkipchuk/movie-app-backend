@@ -4,6 +4,7 @@ import {
   createAccessToken,
   createRefreshToken,
   hash,
+  verifyToken,
 } from "../utils/auth";
 
 export const login = async (email: string, password: string) => {
@@ -64,5 +65,28 @@ export const register = async (
     };
   } catch (error) {
     throw new Error("Registration failed");
+  }
+};
+
+export const refresh = async (cookie: string) => {
+  try {
+    const decoded = verifyToken(cookie, "refresh");
+    const user = await prisma.user.findUnique({
+      where: {
+        id: decoded.sub,
+      },
+    });
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+    const payload = JSON.stringify({ sub: user.id });
+    const accessToken = createAccessToken(payload);
+    const refreshToken = createRefreshToken(payload);
+    return {
+      accessToken,
+      refreshToken,
+    };
+  } catch (error) {
+    throw new Error("Failed to refresh token");
   }
 };

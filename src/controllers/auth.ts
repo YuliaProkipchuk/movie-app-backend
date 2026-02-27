@@ -1,8 +1,12 @@
-import { NextFunction, Response, Request } from "express";
-import { prisma } from "../config/db";
-import { login, register } from "../services/auth";
-
-export const sighInController = async (
+import { NextFunction, Response, Request, CookieOptions } from "express";
+import { login, register, refresh } from "../services/auth";
+const options: CookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "lax",
+  expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+};
+export const signInController = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -10,12 +14,7 @@ export const sighInController = async (
   const { email, password } = req.body;
   try {
     const result = await login(email, password);
-    res.cookie("refresh_token", result.refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    });
+    res.cookie("refresh_token", result.refreshToken, options);
     return res.status(200).json({
       status: "success",
       message: "User signed in successfully",
@@ -24,7 +23,7 @@ export const sighInController = async (
       },
     });
   } catch (error) {
-    next();
+    next(error);
   }
 };
 
@@ -36,12 +35,7 @@ export const signUpController = async (
   const { email, password, username } = req.body;
   try {
     const result = await register(email, password, username);
-    res.cookie("refresh_token", result.refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    });
+    res.cookie("refresh_token", result.refreshToken, options);
     return res.status(201).json({
       status: "success",
       message: "User created successfully",
@@ -50,6 +44,30 @@ export const signUpController = async (
       },
     });
   } catch (error) {
-    next();
+    next(error);
+  }
+};
+
+export const refreshController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const cookie = req.cookies.refresh_token;
+    if (!cookie) {
+      throw new Error("Unauthorized");
+    }
+    const tokens = await refresh(cookie);
+    res.cookie("refresh_token", tokens.refreshToken, options);
+    return res.status(200).json({
+      status: "success",
+      message: "Restored users session",
+      data: {
+        accessToken: tokens.accessToken,
+      },
+    });
+  } catch (error) {
+    next(error);
   }
 };
