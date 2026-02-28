@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.js"
+import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Movie
@@ -226,13 +226,13 @@ export type MovieGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MovieGroupByOutputType = {
   id: string
   title: string
-  description: string
+  description: string | null
   rating: number
-  image: string
+  image: string | null
   actors: string[]
-  director: string
+  director: string | null
   status: $Enums.MovieStatus
-  releasedAt: Date
+  releasedAt: Date | null
   createdAt: Date
   updatedAt: Date
   isFavorite: boolean
@@ -265,13 +265,13 @@ export type MovieWhereInput = {
   NOT?: Prisma.MovieWhereInput | Prisma.MovieWhereInput[]
   id?: Prisma.StringFilter<"Movie"> | string
   title?: Prisma.StringFilter<"Movie"> | string
-  description?: Prisma.StringFilter<"Movie"> | string
+  description?: Prisma.StringNullableFilter<"Movie"> | string | null
   rating?: Prisma.IntFilter<"Movie"> | number
-  image?: Prisma.StringFilter<"Movie"> | string
+  image?: Prisma.StringNullableFilter<"Movie"> | string | null
   actors?: Prisma.StringNullableListFilter<"Movie">
-  director?: Prisma.StringFilter<"Movie"> | string
+  director?: Prisma.StringNullableFilter<"Movie"> | string | null
   status?: Prisma.EnumMovieStatusFilter<"Movie"> | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
+  releasedAt?: Prisma.DateTimeNullableFilter<"Movie"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   isFavorite?: Prisma.BoolFilter<"Movie"> | boolean
@@ -283,13 +283,13 @@ export type MovieWhereInput = {
 export type MovieOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
-  image?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   actors?: Prisma.SortOrder
-  director?: Prisma.SortOrder
+  director?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  releasedAt?: Prisma.SortOrder
+  releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
@@ -304,13 +304,13 @@ export type MovieWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MovieWhereInput[]
   NOT?: Prisma.MovieWhereInput | Prisma.MovieWhereInput[]
   title?: Prisma.StringFilter<"Movie"> | string
-  description?: Prisma.StringFilter<"Movie"> | string
+  description?: Prisma.StringNullableFilter<"Movie"> | string | null
   rating?: Prisma.IntFilter<"Movie"> | number
-  image?: Prisma.StringFilter<"Movie"> | string
+  image?: Prisma.StringNullableFilter<"Movie"> | string | null
   actors?: Prisma.StringNullableListFilter<"Movie">
-  director?: Prisma.StringFilter<"Movie"> | string
+  director?: Prisma.StringNullableFilter<"Movie"> | string | null
   status?: Prisma.EnumMovieStatusFilter<"Movie"> | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
+  releasedAt?: Prisma.DateTimeNullableFilter<"Movie"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   isFavorite?: Prisma.BoolFilter<"Movie"> | boolean
@@ -322,13 +322,13 @@ export type MovieWhereUniqueInput = Prisma.AtLeast<{
 export type MovieOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
-  image?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   actors?: Prisma.SortOrder
-  director?: Prisma.SortOrder
+  director?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  releasedAt?: Prisma.SortOrder
+  releasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
@@ -346,13 +346,13 @@ export type MovieScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MovieScalarWhereWithAggregatesInput | Prisma.MovieScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Movie"> | string
   title?: Prisma.StringWithAggregatesFilter<"Movie"> | string
-  description?: Prisma.StringWithAggregatesFilter<"Movie"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   rating?: Prisma.IntWithAggregatesFilter<"Movie"> | number
-  image?: Prisma.StringWithAggregatesFilter<"Movie"> | string
+  image?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   actors?: Prisma.StringNullableListFilter<"Movie">
-  director?: Prisma.StringWithAggregatesFilter<"Movie"> | string
+  director?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   status?: Prisma.EnumMovieStatusWithAggregatesFilter<"Movie"> | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeWithAggregatesFilter<"Movie"> | Date | string
+  releasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Movie"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Movie"> | Date | string
   isFavorite?: Prisma.BoolWithAggregatesFilter<"Movie"> | boolean
@@ -362,16 +362,16 @@ export type MovieScalarWhereWithAggregatesInput = {
 export type MovieCreateInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   genres?: Prisma.GenreCreateNestedManyWithoutMoviesInput
   createdBy: Prisma.UserCreateNestedOneWithoutMoviesInput
 }
@@ -379,16 +379,16 @@ export type MovieCreateInput = {
 export type MovieUncheckedCreateInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   userId: string
   genres?: Prisma.GenreUncheckedCreateNestedManyWithoutMoviesInput
 }
@@ -396,13 +396,13 @@ export type MovieUncheckedCreateInput = {
 export type MovieUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -413,13 +413,13 @@ export type MovieUpdateInput = {
 export type MovieUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -430,29 +430,29 @@ export type MovieUncheckedUpdateInput = {
 export type MovieCreateManyInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   userId: string
 }
 
 export type MovieUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -461,13 +461,13 @@ export type MovieUpdateManyMutationInput = {
 export type MovieUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -592,6 +592,10 @@ export type MovieCreateactorsInput = {
   set: string[]
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -607,6 +611,10 @@ export type MovieUpdateactorsInput = {
 
 export type EnumMovieStatusFieldUpdateOperationsInput = {
   set?: $Enums.MovieStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -658,32 +666,32 @@ export type MovieUncheckedUpdateManyWithoutGenresNestedInput = {
 export type MovieCreateWithoutCreatedByInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   genres?: Prisma.GenreCreateNestedManyWithoutMoviesInput
 }
 
 export type MovieUncheckedCreateWithoutCreatedByInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   genres?: Prisma.GenreUncheckedCreateNestedManyWithoutMoviesInput
 }
 
@@ -719,13 +727,13 @@ export type MovieScalarWhereInput = {
   NOT?: Prisma.MovieScalarWhereInput | Prisma.MovieScalarWhereInput[]
   id?: Prisma.StringFilter<"Movie"> | string
   title?: Prisma.StringFilter<"Movie"> | string
-  description?: Prisma.StringFilter<"Movie"> | string
+  description?: Prisma.StringNullableFilter<"Movie"> | string | null
   rating?: Prisma.IntFilter<"Movie"> | number
-  image?: Prisma.StringFilter<"Movie"> | string
+  image?: Prisma.StringNullableFilter<"Movie"> | string | null
   actors?: Prisma.StringNullableListFilter<"Movie">
-  director?: Prisma.StringFilter<"Movie"> | string
+  director?: Prisma.StringNullableFilter<"Movie"> | string | null
   status?: Prisma.EnumMovieStatusFilter<"Movie"> | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
+  releasedAt?: Prisma.DateTimeNullableFilter<"Movie"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   isFavorite?: Prisma.BoolFilter<"Movie"> | boolean
@@ -735,32 +743,32 @@ export type MovieScalarWhereInput = {
 export type MovieCreateWithoutGenresInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   createdBy: Prisma.UserCreateNestedOneWithoutMoviesInput
 }
 
 export type MovieUncheckedCreateWithoutGenresInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
   userId: string
 }
 
@@ -788,28 +796,28 @@ export type MovieUpdateManyWithWhereWithoutGenresInput = {
 export type MovieCreateManyCreatedByInput = {
   id?: string
   title: string
-  description: string
-  rating: number
-  image: string
+  description?: string | null
+  rating?: number
+  image?: string | null
   actors?: Prisma.MovieCreateactorsInput | string[]
-  director: string
-  status: $Enums.MovieStatus
-  releasedAt: Date | string
+  director?: string | null
+  status?: $Enums.MovieStatus
+  releasedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  isFavorite: boolean
+  isFavorite?: boolean
 }
 
 export type MovieUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -819,13 +827,13 @@ export type MovieUpdateWithoutCreatedByInput = {
 export type MovieUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -835,13 +843,13 @@ export type MovieUncheckedUpdateWithoutCreatedByInput = {
 export type MovieUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -850,13 +858,13 @@ export type MovieUncheckedUpdateManyWithoutCreatedByInput = {
 export type MovieUpdateWithoutGenresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -866,13 +874,13 @@ export type MovieUpdateWithoutGenresInput = {
 export type MovieUncheckedUpdateWithoutGenresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -882,13 +890,13 @@ export type MovieUncheckedUpdateWithoutGenresInput = {
 export type MovieUncheckedUpdateManyWithoutGenresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actors?: Prisma.MovieUpdateactorsInput | string[]
-  director?: Prisma.StringFieldUpdateOperationsInput | string
+  director?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMovieStatusFieldUpdateOperationsInput | $Enums.MovieStatus
-  releasedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  releasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1017,13 +1025,13 @@ export type $MoviePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
-    description: string
+    description: string | null
     rating: number
-    image: string
+    image: string | null
     actors: string[]
-    director: string
+    director: string | null
     status: $Enums.MovieStatus
-    releasedAt: Date
+    releasedAt: Date | null
     createdAt: Date
     updatedAt: Date
     isFavorite: boolean

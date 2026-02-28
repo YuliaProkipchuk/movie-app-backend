@@ -1,49 +1,56 @@
 import { NextFunction, Request, Response } from "express";
-import { AuthRequest } from "../types/Request";
+import { RequestWithUser } from "../types/Request";
 import { verifyToken } from "../utils/auth";
 import { prisma } from "../config/db";
 
 export const authentication = async (
-  req: AuthRequest,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const authHeader = req.headers["authorization"];
     if (!authHeader?.startsWith("Bearer ")) {
-      return res.status(401).json({
+      res.status(401).json({
         status: "failed",
         message: "Unaithorized Authentication",
       });
+      return;
     }
     const token = authHeader && authHeader.split(" ")[1];
-
     if (!token) {
-      return res.status(401).json({
+      res.status(401).json({
         status: "failed",
         message: "Unaithorized Authentication",
       });
+      return;
     }
 
     const decoded = verifyToken(token, "access");
-    if (!decoded?.sub) return res.sendStatus(401);
-    const user = await prisma.user.findUnique({
-      where: {
-        id: decoded.sub,
-      },
-      select: {
-        id: true,
-        movie: true,
-      },
-    });
-    if (!user) {
-      return res.status(401).json({
+    if (!decoded?.sub) {
+      res.status(401).json({
         status: "failed",
         message: "Unaithorized Authentication",
       });
+      return;
+    }
+    const user = await prisma.user.findFirst({
+      where: {
+        id: decoded.sub,
+      },
+      include: {
+        movies: true
+      }
+    });
+    if (!user) {
+      res.status(401).json({
+        status: "failed",
+        message: "Unaithorized Authentication",
+      });
+      return;
     }
     req.user = user;
-    next();
+    return next();
   } catch (error) {
     res.status(401).json({
       status: "failed",

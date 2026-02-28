@@ -56,7 +56,7 @@ export const register = async (
         username,
       },
     });
-    const payload = JSON.stringify({ sub: newUser.id });
+    const payload = newUser.id;
     const accessToken = createAccessToken(payload);
     const refreshToken = createRefreshToken(payload);
     return {
@@ -64,6 +64,7 @@ export const register = async (
       refreshToken,
     };
   } catch (error) {
+    console.log(error)
     throw new Error("Registration failed");
   }
 };

@@ -18,20 +18,20 @@ export const hash = async (password: string) => {
   const saltRounds = 12;
   return await bcrypt.hash(password, saltRounds);
 };
-export const createAccessToken = (payload: string) => {
+export const createAccessToken = (data: string) => {
   const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
   if (!accessTokenKey) {
     throw new Error("JWT secret is not defined");
   }
-  return jwt.sign(payload, accessTokenKey, accessTokenOptions);
+  return jwt.sign({ sub: data }, accessTokenKey, accessTokenOptions);
 };
 
-export const createRefreshToken = (payload: string) => {
+export const createRefreshToken = (data: string) => {
   const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
   if (!refreshTokenKey) {
     throw new Error("JWT secret is not defined");
   }
-  return jwt.sign(payload, refreshTokenKey, refreshTokenOptions);
+  return jwt.sign({ sub: data }, refreshTokenKey, refreshTokenOptions);
 };
 
 export const verifyToken = (token: string, type: "access" | "refresh") => {
@@ -44,5 +44,5 @@ export const verifyToken = (token: string, type: "access" | "refresh") => {
   }
   const decoded = jwt.verify(token, secret) as JwtPayload;
   if (!decoded.sub) throw new Error("Invalid payload");
-  return decoded;
+  return JSON.parse(decoded.sub);
 };

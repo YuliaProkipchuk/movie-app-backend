@@ -1,5 +1,6 @@
 import { NextFunction, Response, Request, CookieOptions } from "express";
 import { login, register, refresh } from "../services/auth";
+import { RequestWithUser } from "../types/Request";
 const options: CookieOptions = {
   httpOnly: true,
   secure: true,
@@ -71,3 +72,10 @@ export const refreshController = async (
     next(error);
   }
 };
+
+export const logoutController = (req: RequestWithUser,
+  res: Response,
+  next: NextFunction) => {
+  res.clearCookie('refresh_token');
+  return res.sendStatus(200)
+}
