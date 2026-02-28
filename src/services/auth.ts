@@ -1,4 +1,5 @@
 import { prisma } from "../config/db";
+import { ApiError } from "../types/ApiError";
 import {
   comparePassword,
   createAccessToken,
@@ -15,11 +16,11 @@ export const login = async (email: string, password: string) => {
       },
     });
     if (!user) {
-      throw new Error("Invalid email or password");
+      throw new ApiError("Invalid email or password", 400);
     }
     const isPassValid = await comparePassword(password, user.password);
     if (!isPassValid) {
-      throw new Error("Invalid email or password");
+      throw new ApiError("Invalid email or password", 400);
     }
     const payload = JSON.stringify({ sub: user.id });
     const accessToken = createAccessToken(payload);
@@ -30,7 +31,8 @@ export const login = async (email: string, password: string) => {
       refreshToken,
     };
   } catch (error) {
-    throw new Error("Something went wrong");
+    throw new ApiError("Authentication failed", 500);
+
   }
 };
 
@@ -46,7 +48,7 @@ export const register = async (
       },
     });
     if (userExists) {
-      throw new Error("User with this email already exists");
+      throw new ApiError("User with this email already exists", 400);
     }
     const hashedPassword = await hash(password);
     const newUser = await prisma.user.create({
@@ -64,8 +66,7 @@ export const register = async (
       refreshToken,
     };
   } catch (error) {
-    console.log(error)
-    throw new Error("Registration failed");
+    throw new ApiError("Registration failed", 500);
   }
 };
 
@@ -78,9 +79,9 @@ export const refresh = async (cookie: string) => {
       },
     });
     if (!user) {
-      throw new Error("Unauthorized");
+      throw new ApiError("Unauthorized", 401);
     }
-    const payload = JSON.stringify({ sub: user.id });
+    const payload = user.id;
     const accessToken = createAccessToken(payload);
     const refreshToken = createRefreshToken(payload);
     return {
@@ -88,6 +89,6 @@ export const refresh = async (cookie: string) => {
       refreshToken,
     };
   } catch (error) {
-    throw new Error("Failed to refresh token");
+    throw new ApiError("Failed to refresh token", 401);
   }
 };

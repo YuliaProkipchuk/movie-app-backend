@@ -1,4 +1,5 @@
-import { MovieStatus } from "../generated/prisma/enums";
+import z from "zod";
+import { movieEdits, movieInputs, moviesQuery } from "../schemas/movieSchema";
 
 export type Movie = {
   id: string;
@@ -13,15 +14,6 @@ export type Movie = {
   isFavorite: boolean;
 };
 
-export type MovieInput = {
-  title: string;
-  image?: string;
-  rating?: number;
-  release_date?: Date;
-  description?: string;
-  director?: string;
-  actors?: string[];
-  genre?: string[];
-  isFavorite?: boolean;
-  status?: MovieStatus
-};
+export type MovieInput = z.infer<typeof movieInputs>;
+export type MovieEdit = z.infer<typeof movieEdits>;
+export type MovieQuery = z.infer<typeof moviesQuery>;

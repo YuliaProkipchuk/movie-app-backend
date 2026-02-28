@@ -1,6 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
+import { ApiError } from "../types/ApiError";
 
 const accessTokenOptions: SignOptions = {
   expiresIn: "15m",
@@ -21,7 +22,7 @@ export const hash = async (password: string) => {
 export const createAccessToken = (data: string) => {
   const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
   if (!accessTokenKey) {
-    throw new Error("JWT secret is not defined");
+    throw new ApiError('Server configuration error', 500)
   }
   return jwt.sign({ sub: data }, accessTokenKey, accessTokenOptions);
 };
@@ -29,7 +30,7 @@ export const createAccessToken = (data: string) => {
 export const createRefreshToken = (data: string) => {
   const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
   if (!refreshTokenKey) {
-    throw new Error("JWT secret is not defined");
+    throw new ApiError('Server configuration error', 500)
   }
   return jwt.sign({ sub: data }, refreshTokenKey, refreshTokenOptions);
 };
@@ -40,9 +41,9 @@ export const verifyToken = (token: string, type: "access" | "refresh") => {
       ? process.env.ACCESS_TOKEN_KEY
       : process.env.REFRESH_TOKEN_KEY;
   if (!secret) {
-    throw new Error("JWT secret is not defined");
+    throw new ApiError('Server configuration error', 500)
   }
   const decoded = jwt.verify(token, secret) as JwtPayload;
-  if (!decoded.sub) throw new Error("Invalid payload");
+  if (!decoded.sub) throw new ApiError("Invalid token payload", 401);
   return JSON.parse(decoded.sub);
 };

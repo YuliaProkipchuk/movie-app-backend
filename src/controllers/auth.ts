@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request, CookieOptions } from "express";
 import { login, register, refresh } from "../services/auth";
 import { RequestWithUser } from "../types/Request";
+import { ApiError } from "../types/ApiError";
 const options: CookieOptions = {
   httpOnly: true,
   secure: true,
@@ -23,8 +24,8 @@ export const signInController = async (
         accessToken: result.accessToken,
       },
     });
-  } catch (error) {
-    next(error);
+  } catch (ApiError) {
+    next(ApiError);
   }
 };
 
@@ -44,8 +45,8 @@ export const signUpController = async (
         accessToken: result.accessToken,
       },
     });
-  } catch (error) {
-    next(error);
+  } catch (ApiError) {
+    next(ApiError);
   }
 };
 
@@ -57,7 +58,7 @@ export const refreshController = async (
   try {
     const cookie = req.cookies.refresh_token;
     if (!cookie) {
-      throw new Error("Unauthorized");
+      throw new ApiError("Unauthorized", 401);
     }
     const tokens = await refresh(cookie);
     res.cookie("refresh_token", tokens.refreshToken, options);
@@ -68,8 +69,8 @@ export const refreshController = async (
         accessToken: tokens.accessToken,
       },
     });
-  } catch (error) {
-    next(error);
+  } catch (ApiError) {
+    next(ApiError);
   }
 };
 

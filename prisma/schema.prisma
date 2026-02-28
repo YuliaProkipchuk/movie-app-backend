@@ -42,6 +42,7 @@ model Movie {
 
   @@index([userId])
   @@index([isFavorite])
+  @@unique([id, userId])
 }
 
 model Genre {
