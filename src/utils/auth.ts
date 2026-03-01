@@ -4,7 +4,7 @@ import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import { ApiError } from "../types/ApiError";
 
 const accessTokenOptions: SignOptions = {
-  expiresIn: "15m",
+  expiresIn: "1h",
 };
 const refreshTokenOptions: SignOptions = {
   expiresIn: "7d",
@@ -45,5 +45,5 @@ export const verifyToken = (token: string, type: "access" | "refresh") => {
   }
   const decoded = jwt.verify(token, secret) as JwtPayload;
   if (!decoded.sub) throw new ApiError("Invalid token payload", 401);
-  return JSON.parse(decoded.sub);
+  return decoded;
 };

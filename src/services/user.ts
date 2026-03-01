@@ -29,9 +29,15 @@ export async function fetchUserMovies(userId: string, query: MovieQuery) {
           isFavorite: favoriteValue,
           director: query.director ? { contains: query.director, mode: "insensitive" } : undefined,
           actors: query.actors?.length ? {
-            hasEvery: query.actors,
-          }
-            : undefined,
+            some: {
+              OR: query.actors.map(actor => ({
+                name: {
+                  contains: actor,
+                  mode: "insensitive",
+                },
+              })),
+            },
+          } : undefined,
           genres: query.genres?.length
             ? {
               every: {
@@ -43,6 +49,11 @@ export async function fetchUserMovies(userId: string, query: MovieQuery) {
         },
         include: {
           genres: {
+            select: {
+              name: true
+            }
+          },
+          actors:{
             select: {
               name: true
             }
@@ -60,7 +71,9 @@ export async function fetchUserMovies(userId: string, query: MovieQuery) {
           title: query.q ? { contains: query.q, mode: "insensitive" } : undefined,
           director: query.director ? { contains: query.director, mode: "insensitive" } : undefined,
           actors: query.actors?.length ? {
-            hasEvery: query.actors,
+            every: {
+              name: { in: query.actors.map(a => a.toLowerCase()), mode: "insensitive" },
+            },
           }
             : undefined,
           genres: query.genres?.length

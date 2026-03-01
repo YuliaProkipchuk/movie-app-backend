@@ -7,7 +7,7 @@ export const movieInputs = z
     description: z.string().optional(),
     image: z.url().optional(),
     director: z.string().optional(),
-    rating: z.coerce.number().min(1).max(10).optional(),
+    rating: z.coerce.number().min(0).max(10).optional().default(0),
     isFavorite: z.boolean().optional(),
     genres: z.array(z.string()).optional().default([]),
     actors: z.array(z.string()).optional().default([]),
@@ -21,18 +21,22 @@ export const movieEdits = z
     description: z.string().optional(),
     image: z.url().optional(),
     director: z.string().optional(),
-    rating: z.coerce.number().min(1).max(10).optional(),
+    rating: z.coerce.number().min(0).max(10).optional().default(0),
     isFavorite: z.boolean().optional(),
     genres: z
-    .array(z.string(), 'Genres are required'),
+    .array(z.string()).optional(),
     actors: z
-      .array(z.string(), 'Actors are required'),
+      .array(z.string()).optional(),
     releasedAt: z.coerce.date().optional(),
     status: z.enum(MovieStatus).optional().default(MovieStatus.PLANNED)
   })
 
 export const movieFavoriteStatus = z.object({
   isFavorite: z.boolean()
+})
+
+export const movieRatingInput = z.object({
+  rating: z.coerce.number().min(1).max(10)
 })
 
 export const moviesQuery = z.object({

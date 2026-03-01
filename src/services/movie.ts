@@ -26,7 +26,15 @@ export const createMovie = async (data: MovieInput, userId: string) => {
       title: data.title,
       description: data.description,
       director: data.director,
-      actors: data.actors,
+      actors: {
+        connectOrCreate: (data.actors ?? []).map(name => {
+          const lowerName = name.toLowerCase()
+          return ({
+            where: { name: lowerName },
+            create: { name: lowerName }
+          })
+        })
+      },
       image: data.image,
       isFavorite: data.isFavorite,
       rating: data.rating,
@@ -46,6 +54,7 @@ export const createMovie = async (data: MovieInput, userId: string) => {
 }
 
 export const updateMovie = async (userId: string, movieId: string, data: MovieEdit) => {
+  console.log('data', data);
   return await prisma.$transaction(async (tx) => {
     if (data.genres?.length) {
       await tx.genre.createMany({
@@ -55,7 +64,14 @@ export const updateMovie = async (userId: string, movieId: string, data: MovieEd
         skipDuplicates: true
       });
     }
-
+    if (data.actors?.length) {
+      await tx.actor.createMany({
+        data: data.actors.map(name => ({
+          name: name.toLowerCase()
+        })),
+        skipDuplicates: true
+      });
+    }
     const movie = await tx.movie.update({
       where: { id: movieId, userId },
       data: {
@@ -66,7 +82,13 @@ export const updateMovie = async (userId: string, movieId: string, data: MovieEd
         isFavorite: data.isFavorite,
         rating: data.rating,
         status: data.status,
-        ...(data.actors && { actors: data.actors }),
+        ...(data.actors && {
+          actors: {
+            set: data.actors.map(name => ({
+              name: name.toLowerCase()
+            }))
+          }
+        }),
         ...(data.genres && {
           genres: {
             set: data.genres.map(name => ({
@@ -92,5 +114,17 @@ export const toggleMovieFavorite = async (isFavorite: boolean, userId: string, m
     }
   })
 
+  return result
+}
+export const updateMovieRating = async (rating: number, userId: string, movieId: string) => {
+  const result = await prisma.movie.update({
+    where: {
+      id: movieId,
+      userId
+    },
+    data: {
+      rating: rating
+    }
+  })
   return result
 }

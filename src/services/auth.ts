@@ -9,7 +9,6 @@ import {
 } from "../utils/auth";
 
 export const login = async (email: string, password: string) => {
-  try {
     const user = await prisma.user.findUnique({
       where: {
         email: email,
@@ -22,7 +21,7 @@ export const login = async (email: string, password: string) => {
     if (!isPassValid) {
       throw new ApiError("Invalid email or password", 400);
     }
-    const payload = JSON.stringify({ sub: user.id });
+    const payload = user.id;
     const accessToken = createAccessToken(payload);
     const refreshToken = createRefreshToken(payload);
 
@@ -30,10 +29,6 @@ export const login = async (email: string, password: string) => {
       accessToken,
       refreshToken,
     };
-  } catch (error) {
-    throw new ApiError("Authentication failed", 500);
-
-  }
 };
 
 export const register = async (
@@ -41,37 +36,33 @@ export const register = async (
   password: string,
   username: string,
 ) => {
-  try {
-    const userExists = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    if (userExists) {
-      throw new ApiError("User with this email already exists", 400);
-    }
-    const hashedPassword = await hash(password);
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        username,
-      },
-    });
-    const payload = newUser.id;
-    const accessToken = createAccessToken(payload);
-    const refreshToken = createRefreshToken(payload);
-    return {
-      accessToken,
-      refreshToken,
-    };
-  } catch (error) {
-    throw new ApiError("Registration failed", 500);
+  const userExists = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (userExists) {
+    throw new ApiError("User with this email already exists", 400);
   }
+  const hashedPassword = await hash(password);
+  const newUser = await prisma.user.create({
+    data: {
+      email,
+      password: hashedPassword,
+      username,
+    },
+  });
+  const payload = newUser.id;
+  const accessToken = createAccessToken(payload);
+  const refreshToken = createRefreshToken(payload);
+  return {
+    accessToken,
+    refreshToken,
+  };
+
 };
 
 export const refresh = async (cookie: string) => {
-  try {
     const decoded = verifyToken(cookie, "refresh");
     const user = await prisma.user.findUnique({
       where: {
@@ -88,7 +79,4 @@ export const refresh = async (cookie: string) => {
       accessToken,
       refreshToken,
     };
-  } catch (error) {
-    throw new ApiError("Failed to refresh token", 401);
-  }
 };

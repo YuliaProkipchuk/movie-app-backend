@@ -30,7 +30,7 @@ model Movie {
   rating      Int         @default(0)
   image       String?
   genres      Genre[]
-  actors      String[]
+  actors      Actor[]
   director    String?
   status      MovieStatus @default(PLANNED)
   releasedAt  DateTime?
@@ -51,7 +51,12 @@ model Genre {
   createdAt DateTime @default(now())
   movies    Movie[]
 }
-
+model Actor {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  movies    Movie[]
+}
 enum MovieStatus {
   WATCHED
   PLANNED

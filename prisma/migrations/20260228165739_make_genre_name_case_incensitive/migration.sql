@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Genre" ALTER COLUMN "name" SET DATA TYPE CITEXT;

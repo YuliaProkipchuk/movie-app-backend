@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { RequestWithUser } from "../types/Request";
-import { createMovie, deleteById, getMovie, toggleMovieFavorite, updateMovie } from "../services/movie";
-import { Movie, MovieInput } from "../types/Movie";
+import { createMovie, deleteById, getMovie, toggleMovieFavorite, updateMovie, updateMovieRating } from "../services/movie";
+import { MovieEdit, MovieInput } from "../types/Movie";
 import { ApiError } from "../types/ApiError";
 
 export const getByID = async (
@@ -57,7 +57,7 @@ export const editMovie = async (
   try {
     const movieId = req.params.id as string;
     const userId: string = req.user?.id as string
-    const updatedMovie = await updateMovie(userId, movieId, req.body as MovieInput);
+    const updatedMovie = await updateMovie(userId, movieId, req.body as MovieEdit);
     return res.status(200).json({
       status: 'success',
       message: `The movie ${updatedMovie.title} is updated`
@@ -107,3 +107,22 @@ export const deleteMovie = async (
     next(error);
   }
 };
+export const rateMovie = async (
+  req: RequestWithUser,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { rating } = req.body;
+    const movieId = req.params.id as string;
+    const userId: string = req.user?.id as string
+    const updatedMovie = await updateMovieRating(rating, userId, movieId);
+    return res.status(200).json({
+      status: 'success',
+      message: `The movie ${updatedMovie.title} is rated ${rating}`
+    })
+  }
+  catch (error) {
+    next(error);
+  }
+}
